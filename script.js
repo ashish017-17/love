@@ -73,7 +73,7 @@ function selectProfile(profile) {
 document.querySelectorAll('.movie-card').forEach(card => {
   const vid = card.querySelector('.card-video');
   if (!vid) return;
-  card.addEventListener('mouseenter', () => { vid.currentTime = 0; vid.play().catch(() => {}); });
+  card.addEventListener('mouseenter', () => { vid.muted = true; vid.currentTime = 0; vid.play().catch(() => {}); });
   card.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
 });
 

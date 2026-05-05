@@ -463,8 +463,7 @@ img {
 
 /* ═══ MOVIE CARD WITH VIDEO ═══ */
 .movie-card {
-  flex: 0 0 auto;
-  width: 140px;
+  flex: 1 0 140px;
   border-radius: 6px;
   overflow: hidden;
   cursor: pointer;
@@ -481,7 +480,7 @@ img {
 }
 .card-video {
   width: 100%;
-  height: 220px;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   display: block;
   pointer-events: none;
@@ -494,6 +493,7 @@ img {
   padding: 12px;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 100%);
   opacity: 0;
+  z-index: 2;
   transition: opacity 0.3s;
 }
 .movie-card:hover .card-gradient {
@@ -574,10 +574,7 @@ img {
     font-size: 2.5rem;
   }
   .movie-card {
-    width: 100px;
-  }
-  .card-video {
-    height: 160px;
+    flex-basis: 100px;
   }
 }
 @media (max-width: 640px) {
@@ -608,11 +605,15 @@ img {
     padding: 8px 18px;
     font-size: 0.85rem;
   }
-  .movie-card {
-    width: 90px;
+  .row-slider {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    overflow-x: visible;
+    padding-bottom: 0;
   }
-  .card-video {
-    height: 130px;
+  .movie-card {
+    flex: 0 0 calc(50% - 4px);
+    margin-bottom: 12px;
   }
   .movie-card:hover {
     transform: scale(1.05);
