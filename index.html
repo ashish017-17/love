@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NETFLIX</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+  <div class="loader-logo"><span class="big-n">N</span></div>
+  <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
+</div>
+
+<!-- PROFILE SCREEN -->
+<div id="profile-screen" class="hidden">
+  <h1 class="who-title">Who's Watching?</h1>
+  <div class="profiles" id="profilesGrid"></div>
+  <p class="manage-btn"><i class="fas fa-pen"></i> Manage Profiles</p>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" class="hidden">
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-left">
+      <span class="nav-n">NETFLIX</span>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="#">TV Shows</a></li>
+        <li><a href="#">Movies</a></li>
+        <li><a href="#">New & Popular</a></li>
+        <li><a href="#">My List</a></li>
+      </ul>
+    </div>
+    <div class="nav-right">
+      <button class="icon-btn"><i class="fas fa-search"></i></button>
+      <button class="icon-btn"><i class="fas fa-bell"></i></button>
+      <button class="icon-btn audio-toggle" id="audioBtn"><i class="fas fa-volume-up" id="audioIcon"></i></button>
+      <div class="nav-avatar" id="navAvatar"></div>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu hidden" id="mobileMenu">
+    <a href="#">Home</a><a href="#">TV Shows</a><a href="#">Movies</a><a href="#">New & Popular</a><a href="#">My List</a>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section id="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="videos/01.mp4" type="video/mp4">
+    </video>
+    <div class="hero-gradient"></div>
+    <div class="hero-content">
+      <div class="hero-badge"><i class="fas fa-fire"></i> #1 Trending</div>
+      <h1 class="hero-title">Shadow Protocol</h1>
+      <div class="hero-meta">
+        <span class="match">97% Match</span>
+        <span>2024</span><span>TV-MA</span><span>2h 15m</span>
+      </div>
+      <p class="hero-desc">A rogue agent uncovers a conspiracy threatening the global order. With everyone hunting her, she fights through shadows to expose the truth.</p>
+      <div class="hero-btns">
+        <button class="btn-play" onclick="openVideo('videos/01.mp4','Shadow Protocol')"><i class="fas fa-play"></i> Play</button>
+        <button class="btn-info" onclick="openInfo(this)" data-title="Shadow Protocol" data-year="2024" data-rating="TV-MA" data-dur="2h 15m" data-match="97" data-desc="A rogue agent fights through a web of conspiracies to save the world from a shadow government." data-genre="Action, Thriller" data-video="videos/01.mp4"><i class="fas fa-info-circle"></i> More Info</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CONTENT ROWS ═══ -->
+  <section id="rows-container">
+
+    <!-- TRENDING NOW -->
+    <div class="content-row">
+      <h2 class="row-title"><i class="fas fa-fire"></i> Trending Now <span class="explore">Explore All ›</span></h2>
+      <div class="row-slider">
+
+        <div class="movie-card" onclick="openVideo('videos/01.mp4','Shadow Protocol')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/01.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Shadow Protocol</div>
+            <div class="card-meta">2024 · TV-MA</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/02.mp4','Starfall')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/02.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Starfall</div>
+            <div class="card-meta">2023 · PG-13</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/03.mp4','Dark Waters')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/03.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Dark Waters</div>
+            <div class="card-meta">2024 · R</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/01.mp4','Iron Horizon')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/01.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Iron Horizon</div>
+            <div class="card-meta">2023 · PG-13</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/02.mp4','Midnight Run')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/02.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Midnight Run</div>
+            <div class="card-meta">2023 · TV-MA</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/03.mp4','Cosmic Drift')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/03.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Cosmic Drift</div>
+            <div class="card-meta">2024 · PG-13</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- POPULAR ON NETFLIX -->
+    <div class="content-row">
+      <h2 class="row-title"><i class="fas fa-thumbs-up"></i> Popular on Netflix <span class="explore">Explore All ›</span></h2>
+      <div class="row-slider">
+
+        <div class="movie-card" onclick="openVideo('videos/03.mp4','Code Black')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/03.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Code Black</div>
+            <div class="card-meta">2024 · TV-MA</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/01.mp4','Neon Knights')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/01.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Neon Knights</div>
+            <div class="card-meta">2024 · R</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/02.mp4','The Last Laugh')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/02.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">The Last Laugh</div>
+            <div class="card-meta">2024 · R</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/03.mp4','Punchline')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/03.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Punchline</div>
+            <div class="card-meta">2024 · R</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/01.mp4','Wedding Chaos')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/01.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Wedding Chaos</div>
+            <div class="card-meta">2023 · PG-13</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/02.mp4','Laugh Factory')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/02.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Laugh Factory</div>
+            <div class="card-meta">2023 · PG</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ACTION MOVIES -->
+    <div class="content-row">
+      <h2 class="row-title"><i class="fas fa-bolt"></i> Action Movies <span class="explore">Explore All ›</span></h2>
+      <div class="row-slider">
+
+        <div class="movie-card" onclick="openVideo('videos/01.mp4','Shadow Protocol')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/01.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Shadow Protocol</div>
+            <div class="card-meta">2024 · TV-MA</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/02.mp4','Starfall')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/02.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Starfall</div>
+            <div class="card-meta">2023 · PG-13</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/03.mp4','Dark Waters')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/03.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Dark Waters</div>
+            <div class="card-meta">2024 · R</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/01.mp4','Iron Horizon')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/01.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Iron Horizon</div>
+            <div class="card-meta">2023 · PG-13</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/02.mp4','Midnight Run')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/02.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Midnight Run</div>
+            <div class="card-meta">2023 · TV-MA</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/03.mp4','Neon Knights')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/03.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Neon Knights</div>
+            <div class="card-meta">2024 · R</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- COMEDY MOVIES -->
+    <div class="content-row">
+      <h2 class="row-title"><i class="fas fa-face-laugh"></i> Comedy Movies <span class="explore">Explore All ›</span></h2>
+      <div class="row-slider">
+
+        <div class="movie-card" onclick="openVideo('videos/02.mp4','The Last Laugh')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/02.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">The Last Laugh</div>
+            <div class="card-meta">2024 · R</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/03.mp4','Laugh Factory')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/03.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Laugh Factory</div>
+            <div class="card-meta">2023 · PG</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/01.mp4','Wedding Chaos')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/01.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Wedding Chaos</div>
+            <div class="card-meta">2023 · PG-13</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/02.mp4','Punchline')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/02.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Punchline</div>
+            <div class="card-meta">2024 · R</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/03.mp4','Code Black')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/03.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Code Black</div>
+            <div class="card-meta">2024 · TV-MA</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="openVideo('videos/01.mp4','Cosmic Drift')">
+          <video class="card-video" muted loop playsinline preload="metadata"><source src="videos/01.mp4" type="video/mp4"></video>
+          <div class="card-gradient">
+            <div class="card-title">Cosmic Drift</div>
+            <div class="card-meta">2024 · PG-13</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+</div><!-- /#app -->
+
+<!-- VIDEO PLAYER MODAL -->
+<div id="videoModal" class="modal hidden">
+  <div class="modal-inner">
+    <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+    <video id="videoPlayer" controls playsinline></video>
+    <h3 class="modal-title" id="modalTitle"></h3>
+  </div>
+</div>
+
+<!-- BG AUDIO -->
+<audio id="bgAudio" loop preload="none">
+  <source src="audio/ordinary.mp3" type="audio/mpeg">
+</audio>
+
+<script src="script.js"></script>
+</body>
+</html>
