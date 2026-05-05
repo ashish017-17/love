@@ -3,8 +3,8 @@
    ═══════════════════════════════════════ */
 
 const PROFILES = [
-  { name: 'Ashish', color: '#e50914', initial: 'A', img: 'images/avatars/alex.jpg' },
-  { name: 'Swara', color: '#1ce783', initial: 'S', img: 'images/avatars/sarah.jpg' },
+  { name: 'Ashish', color: '#ffffffff', initial: 'A', img: 'images/avatars/alex.jpg' },
+  { name: 'Swara', color: '#ffffffff', initial: 'S', img: 'images/avatars/sarah.jpg' },
 ];
 
 const $ = id => document.getElementById(id);
@@ -83,7 +83,7 @@ function openVideo(src, title) {
   const player = $('videoPlayer');
   modal.classList.remove('hidden');
   player.src = src;
-  player.muted = false;
+  player.muted = true;
   $('modalTitle').textContent = title || '';
   player.play().catch(() => {});
   $('bgAudio').pause();
