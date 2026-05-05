@@ -69,35 +69,162 @@ function selectProfile(profile) {
   }, 500);
 }
 
-// ── HOVER PREVIEW: play video on card hover ──
-document.querySelectorAll('.movie-card').forEach(card => {
-  const vid = card.querySelector('.card-video');
-  if (!vid) return;
-  card.addEventListener('mouseenter', () => { vid.muted = true; vid.currentTime = 0; vid.play().catch(() => {}); });
-  card.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
-});
+// ── HOVER PREVIEW ──
+// Disabled: Videos now autoplay directly via HTML attribute.
 
-// ── VIDEO MODAL ──
+// ── VIDEO MODAL & CUSTOM CONTROLS ──
+const video = $('videoPlayer');
+const videoContainer = $('videoContainer');
+const videoControls = $('videoControls');
+const playPauseBtn = $('playPauseBtn');
+const playIcon = $('playIcon');
+const rewindBtn = $('rewindBtn');
+const forwardBtn = $('forwardBtn');
+const volBtn = $('volBtn');
+const volIcon = $('volIcon');
+const volumeSlider = $('volumeSlider');
+const currentTimeEl = $('currentTime');
+const durationTimeEl = $('durationTime');
+const progressContainer = $('progressContainer');
+const progressBar = $('progressBar');
+const progressHoverTime = $('progressHoverTime');
+const fullscreenBtn = $('fullscreenBtn');
+const fullScreenIcon = $('fullScreenIcon');
+
+let hideControlsTimeout;
+
 function openVideo(src, title) {
-  const modal = $('videoModal');
-  const player = $('videoPlayer');
-  modal.classList.remove('hidden');
-  player.src = src;
-  player.muted = true;
+  $('videoModal').classList.remove('hidden');
+  video.src = src;
+  video.muted = false; // Netflix plays sound
+  volumeSlider.value = 1;
+  volIcon.className = 'fas fa-volume-up';
+  
   $('modalTitle').textContent = title || '';
-  player.play().catch(() => {});
+  video.play().then(() => updatePlayIcon()).catch(() => {});
+  
   $('bgAudio').pause();
+  resetHideControlsTimer();
+}
+
+function closeVideo() {
+  video.pause();
+  video.src = '';
+  $('videoModal').classList.add('hidden');
+  if (!audioMuted) tryPlayAudio();
+  clearTimeout(hideControlsTimeout);
 }
 
 $('modalClose').onclick = closeVideo;
 $('videoModal').onclick = function(e) { if (e.target === this) closeVideo(); };
 
-function closeVideo() {
-  $('videoPlayer').pause();
-  $('videoPlayer').src = '';
-  $('videoModal').classList.add('hidden');
-  if (!audioMuted) tryPlayAudio();
+// Toggle Play/Pause
+function togglePlay() {
+  if (video.paused) video.play();
+  else video.pause();
+  updatePlayIcon();
 }
+
+function updatePlayIcon() {
+  playIcon.className = video.paused ? 'fas fa-play' : 'fas fa-pause';
+}
+
+playPauseBtn.onclick = togglePlay;
+video.onclick = togglePlay;
+
+// Skip Forward/Back
+rewindBtn.onclick = () => { video.currentTime -= 10; };
+forwardBtn.onclick = () => { video.currentTime += 10; };
+
+// Volume Control
+function toggleMute() {
+  video.muted = !video.muted;
+  if(video.muted) {
+    volumeSlider.value = 0;
+    volIcon.className = 'fas fa-volume-mute';
+  } else {
+    volumeSlider.value = video.volume || 1;
+    volIcon.className = 'fas fa-volume-up';
+  }
+}
+volBtn.onclick = toggleMute;
+
+volumeSlider.addEventListener('input', (e) => {
+  video.volume = e.target.value;
+  video.muted = e.target.value === '0';
+  if(video.muted) volIcon.className = 'fas fa-volume-mute';
+  else if (video.volume < 0.5) volIcon.className = 'fas fa-volume-down';
+  else volIcon.className = 'fas fa-volume-up';
+});
+
+// Format time
+function formatTime(time) {
+  if(isNaN(time)) return "0:00";
+  const minutes = Math.floor(time / 60);
+  let seconds = Math.floor(time % 60);
+  if (seconds < 10) seconds = `0${seconds}`;
+  return `${minutes}:${seconds}`;
+}
+
+// Update Progress Bar
+video.addEventListener('timeupdate', () => {
+  currentTimeEl.textContent = formatTime(video.currentTime);
+  const progressPercent = (video.currentTime / video.duration) * 100;
+  progressBar.style.width = `${progressPercent}%`;
+});
+
+video.addEventListener('loadedmetadata', () => {
+  durationTimeEl.textContent = formatTime(video.duration);
+});
+
+// Click to Seek
+progressContainer.addEventListener('click', (e) => {
+  const rect = progressContainer.getBoundingClientRect();
+  const pos = (e.clientX - rect.left) / rect.width;
+  video.currentTime = pos * video.duration;
+});
+
+// Hover Time on Progress Bar
+progressContainer.addEventListener('mousemove', (e) => {
+  const rect = progressContainer.getBoundingClientRect();
+  const pos = (e.clientX - rect.left) / rect.width;
+  const hoverTime = pos * video.duration;
+  progressHoverTime.textContent = formatTime(hoverTime);
+  progressHoverTime.style.left = `${pos * 100}%`;
+});
+
+// Fullscreen
+fullscreenBtn.onclick = () => {
+  if (!document.fullscreenElement) {
+    videoContainer.requestFullscreen().catch(err => console.log(err));
+  } else {
+    document.exitFullscreen();
+  }
+};
+
+document.addEventListener('fullscreenchange', () => {
+  if (document.fullscreenElement) fullScreenIcon.className = 'fas fa-compress';
+  else fullScreenIcon.className = 'fas fa-expand';
+});
+
+// Auto-hide controls
+function resetHideControlsTimer() {
+  videoControls.classList.remove('hidden-controls');
+  videoContainer.style.cursor = 'default';
+  clearTimeout(hideControlsTimeout);
+  
+  if(!video.paused) {
+    hideControlsTimeout = setTimeout(() => {
+      videoControls.classList.add('hidden-controls');
+      videoContainer.style.cursor = 'none';
+    }, 3000);
+  }
+}
+
+videoContainer.addEventListener('mousemove', resetHideControlsTimer);
+videoContainer.addEventListener('click', resetHideControlsTimer);
+video.addEventListener('pause', resetHideControlsTimer);
+video.addEventListener('play', resetHideControlsTimer);
 
 // ── NAVBAR SCROLL ──
 window.addEventListener('scroll', () => {

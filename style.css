@@ -463,7 +463,7 @@ img {
 
 /* ═══ MOVIE CARD WITH VIDEO ═══ */
 .movie-card {
-  flex: 1 0 140px;
+  flex: 0 0 150px;
   border-radius: 6px;
   overflow: hidden;
   cursor: pointer;
@@ -480,7 +480,8 @@ img {
 }
 .card-video {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 100%;
+  aspect-ratio: 2 / 3;
   object-fit: cover;
   display: block;
   pointer-events: none;
@@ -606,14 +607,14 @@ img {
     font-size: 0.85rem;
   }
   .row-slider {
-    flex-wrap: wrap;
-    justify-content: space-between;
-    overflow-x: visible;
-    padding-bottom: 0;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 12px;
   }
   .movie-card {
-    flex: 0 0 calc(50% - 4px);
-    margin-bottom: 12px;
+    flex: 0 0 120px;
+    margin-bottom: 0;
   }
   .movie-card:hover {
     transform: scale(1.05);
@@ -627,4 +628,169 @@ img {
   .nav-n {
     font-size: 1.6rem;
   }
+}
+
+/* ═══ CUSTOM VIDEO CONTROLS ═══ */
+#videoContainer {
+  position: relative;
+  display: flex;
+  background: #000;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+#videoPlayer {
+  width: 100%;
+  height: auto;
+  max-height: 85vh;
+  cursor: pointer;
+}
+.video-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30px 4%;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+  z-index: 20;
+}
+.video-controls.hidden-controls {
+  opacity: 0;
+  pointer-events: none;
+}
+.controls-top {
+  margin-bottom: 10px;
+}
+.progress-container {
+  position: relative;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: height 0.2s, transform 0.2s;
+  margin-bottom: 20px;
+}
+.progress-container:hover {
+  height: 8px;
+}
+.progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--red);
+  width: 0%;
+  border-radius: 2px;
+  pointer-events: none;
+}
+.progress-thumb {
+  position: absolute;
+  right: -7px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background: var(--red);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.progress-container:hover .progress-thumb {
+  opacity: 1;
+}
+.progress-hover-time {
+  position: absolute;
+  top: -35px;
+  background: #000;
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-weight: 600;
+  border: 1px solid #333;
+}
+.progress-container:hover .progress-hover-time {
+  opacity: 1;
+}
+.controls-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.controls-left, .controls-right {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+.control-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.control-btn:hover {
+  transform: scale(1.15);
+}
+.volume-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.volume-slider {
+  width: 0;
+  opacity: 0;
+  transition: width 0.3s, opacity 0.3s;
+  cursor: pointer;
+  accent-color: var(--red);
+}
+.volume-container:hover .volume-slider {
+  width: 80px;
+  opacity: 1;
+}
+.time-display {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #e5e5e5;
+  margin-left: 10px;
+}
+.time-sep {
+  margin: 0 5px;
+  color: #777;
+}
+
+/* Update Modal Close Button to look like Netflix Back Arrow */
+.modal-close {
+  top: 30px;
+  left: 4%;
+  right: auto;
+  font-size: 2.2rem;
+  background: transparent;
+  z-index: 30;
+  opacity: 1;
+  transition: opacity 0.4s ease, transform 0.2s;
+  width: auto;
+  height: auto;
+}
+.modal-close:hover {
+  background: transparent;
+  transform: scale(1.1);
+}
+.hidden-controls ~ .modal-close {
+  opacity: 0;
+  pointer-events: none;
 }
