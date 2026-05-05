@@ -118,6 +118,19 @@ function closeVideo() {
 $('modalClose').onclick = closeVideo;
 $('videoModal').onclick = function(e) { if (e.target === this) closeVideo(); };
 
+// Dynamically handle movie card clicks to use their exact title and video src
+document.querySelectorAll('.movie-card').forEach(card => {
+  card.onclick = function(e) {
+    // If it's a hero button or something else with its own click, let it be.
+    // But for movie cards, override with dynamic data.
+    const sourceEl = this.querySelector('source');
+    const titleEl = this.querySelector('.card-title');
+    if (sourceEl && titleEl) {
+      openVideo(sourceEl.src, titleEl.textContent);
+    }
+  };
+});
+
 // Toggle Play/Pause
 function togglePlay() {
   if (video.paused) video.play();
