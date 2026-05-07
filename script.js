@@ -274,3 +274,103 @@ $('audioBtn').onclick = () => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeVideo();
 });
+
+/* ═══════════════════════════════════════════════════════
+   SECTION NAVIGATION — Home / Music / Gallery
+   ═══════════════════════════════════════════════════════ */
+
+const HOME_SECTIONS  = ['hero', 'rows-container'];
+const MUSIC_SECTION  = 'music-section';
+const GALLERY_SECTION= 'gallery-section';
+
+/** Show a named section and hide the others */
+function showSection(name) {
+  // Sections to toggle
+  const heroEl    = document.getElementById('hero');
+  const rowsEl    = document.getElementById('rows-container');
+  const musicEl   = document.getElementById(MUSIC_SECTION);
+  const galleryEl = document.getElementById(GALLERY_SECTION);
+
+  // Helper: fade-switch an element
+  function fadeIn(el) {
+    el.style.opacity = '0';
+    el.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      el.style.transition = 'opacity 0.45s ease';
+      el.style.opacity    = '1';
+    });
+  }
+
+  function fadeOut(el, cb) {
+    el.style.transition = 'opacity 0.25s ease';
+    el.style.opacity    = '0';
+    setTimeout(() => {
+      el.classList.add('hidden');
+      el.style.opacity    = '';
+      el.style.transition = '';
+      if (cb) cb();
+    }, 260);
+  }
+
+  if (name === 'music') {
+    // Hide home + gallery
+    fadeOut(heroEl);
+    fadeOut(rowsEl);
+    fadeOut(galleryEl);
+    // Show music
+    setTimeout(() => fadeIn(musicEl), 100);
+    // Scroll to top of section
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  } else if (name === 'gallery') {
+    // Hide home + music
+    fadeOut(heroEl);
+    fadeOut(rowsEl);
+    fadeOut(musicEl);
+    // Show gallery
+    setTimeout(() => fadeIn(galleryEl), 100);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  } else {
+    // HOME — hide music + gallery, show home
+    fadeOut(musicEl);
+    fadeOut(galleryEl);
+    setTimeout(() => {
+      fadeIn(heroEl);
+      fadeIn(rowsEl);
+    }, 100);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Update active state on all nav links
+  document.querySelectorAll('[data-section]').forEach(link => {
+    link.classList.remove('active');
+    if (link.dataset.section === name) {
+      link.classList.add('active');
+    }
+    // "home" links stay active on home
+    if (name === 'home' && link.dataset.section === 'home') {
+      link.classList.add('active');
+    }
+  });
+}
+
+// Wire up all nav links that have data-section attribute
+document.addEventListener('click', e => {
+  const link = e.target.closest('[data-section]');
+  if (!link) return;
+  e.preventDefault();
+
+  const section = link.dataset.section;
+  if (!section) return;
+
+  showSection(section);
+
+  // Close mobile menu if open
+  const mobileMenu = document.getElementById('mobileMenu');
+  const hamburger  = document.getElementById('hamburger');
+  if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+    mobileMenu.classList.add('hidden');
+    hamburger && hamburger.classList.remove('open');
+  }
+});

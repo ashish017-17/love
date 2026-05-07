@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NETFLIX</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="music.css">
+  <link rel="stylesheet" href="gallery.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -31,11 +33,13 @@
     <div class="nav-left">
       <span class="nav-n">NETFLIX</span>
       <ul class="nav-links">
-        <li><a href="#" class="active">Home</a></li>
-        <li><a href="#">TV Shows</a></li>
-        <li><a href="#">Movies</a></li>
-        <li><a href="#">New & Popular</a></li>
-        <li><a href="#">My List</a></li>
+        <!-- <li><a href="#" class="active" data-section="home">Home</a></li>
+        <li><a href="#" data-section="home">Movies</a></li> -->
+        <!-- <li><a href="#" data-section="music">Music</a></li>
+        <li><a href="#" data-section="gallery">Gallery</a></li> -->
+        <li><a href="https://happybirthday-blue-phi.vercel.app" class="nav-special nav-birthday25">🎂 Birthday 2025</a></li>
+        <li><a href="https://11001100.vercel.app" class="nav-special nav-valentine">❤️ Valentine Day</a></li>
+        <li><a href="birthday2026.html" class="nav-special nav-birthday26">🎉 Birthday 2026</a></li>
       </ul>
     </div>
     <div class="nav-right">
@@ -49,7 +53,13 @@
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu hidden" id="mobileMenu">
-    <a href="#">Home</a><a href="#">TV Shows</a><a href="#">Movies</a><a href="#">New & Popular</a><a href="#">My List</a>
+    <!-- <a href="#" data-section="home">🏠 Home</a>
+    <a href="#" data-section="home">🎬 Movies</a> -->
+    <!-- <a href="#" data-section="music">🎵 Music</a>
+    <a href="#" data-section="gallery">🖼️ Gallery</a> -->
+    <a href="https://happybirthday-blue-phi.vercel.app" class="nav-special nav-birthday25">🎂 Birthday 2025</a>
+    <a href="https://11001100.vercel.app" class="nav-special nav-valentine">❤️ Valentine Day</a>
+    <a href="birthday2026.html" class="nav-special nav-birthday26">🎉 Birthday 2026</a>
   </div>
 
   <!-- HERO SECTION -->
@@ -244,6 +254,83 @@
       </div>
     </div>
   </section>
+
+  <!-- ═══════════════════════════════════
+       MUSIC SECTION
+  ═══════════════════════════════════ -->
+  <section id="music-section" class="hidden">
+    <div class="music-hero">
+      <div class="music-hero-bg"></div>
+      <div class="music-hero-content">
+        <div class="music-hero-icon"><i class="fas fa-music"></i></div>
+        <h1 class="music-hero-title">Our Soundtrack</h1>
+        <p class="music-hero-sub">Songs that tell our story 💫</p>
+      </div>
+    </div>
+
+    <div class="music-rows-container">
+      <!-- Row 1: Featured Tracks -->
+      <div class="music-row" id="musicRowFeatured">
+        <h2 class="music-row-title"><i class="fas fa-star"></i> Featured Tracks <span class="music-row-count" id="featuredCount"></span></h2>
+        <div class="music-cards-slider" id="sliderFeatured"></div>
+      </div>
+
+      <!-- Row 2: Love Songs -->
+      <div class="music-row" id="musicRowLove">
+        <h2 class="music-row-title"><i class="fas fa-heart"></i> Love Songs <span class="music-row-count" id="loveCount"></span></h2>
+        <div class="music-cards-slider" id="sliderLove"></div>
+      </div>
+
+      <!-- Row 3: All Songs -->
+      <div class="music-row" id="musicRowAll">
+        <h2 class="music-row-title"><i class="fas fa-music"></i> All Songs <span class="music-row-count" id="allCount"></span></h2>
+        <div class="music-cards-slider" id="sliderAll"></div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="music-empty" id="musicEmpty" style="display:none">
+      <div class="music-empty-icon"><i class="fas fa-music"></i></div>
+      <h3>No music files found</h3>
+      <p>Drop your <code>.mp3</code> files into the <code>/music</code> folder<br>and album covers into <code>/images/music</code> to get started.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       GALLERY SECTION
+  ═══════════════════════════════════ -->
+  <section id="gallery-section" class="hidden">
+    <div class="gallery-hero">
+      <div class="gallery-hero-bg"></div>
+      <div class="gallery-hero-content">
+        <div class="gallery-hero-icon"><i class="fas fa-images"></i></div>
+        <h1 class="gallery-hero-title">Our Memories</h1>
+        <p class="gallery-hero-sub">Every picture tells a story ✨</p>
+      </div>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="gallery-tabs-wrap">
+      <div class="gallery-tabs" id="galleryTabs">
+        <button class="gallery-tab active" data-cat="all">All Photos</button>
+        <button class="gallery-tab" data-cat="behind-the-scenes">Behind The Scenes</button>
+        <button class="gallery-tab" data-cat="actors">Actors</button>
+        <button class="gallery-tab" data-cat="wallpapers">Wallpapers</button>
+        <button class="gallery-tab" data-cat="trending">Trending Posters</button>
+      </div>
+    </div>
+
+    <!-- Masonry Grid -->
+    <div class="gallery-grid" id="galleryGrid"></div>
+
+    <!-- Empty State -->
+    <div class="gallery-empty" id="galleryEmpty" style="display:none">
+      <div class="gallery-empty-icon"><i class="fas fa-images"></i></div>
+      <h3>No images found</h3>
+      <p>Drop your images into the <code>/gallery</code> folder to get started.</p>
+    </div>
+  </section>
+
 </div><!-- /#app -->
 
 <!-- VIDEO PLAYER MODAL -->
@@ -291,6 +378,68 @@
   <source src="audio/ordinary.mp3" type="audio/mpeg">
 </audio>
 
+<!-- ═══ MUSIC PLAYER BAR ═══ -->
+<div id="musicPlayer" class="music-player hidden">
+  <!-- Animated Equalizer -->
+  <div class="eq-bars" id="eqBars">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <!-- Album Art -->
+  <div class="player-art-wrap">
+    <div class="player-art" id="playerArt">
+      <img id="playerArtImg" src="" alt="album art">
+      <div class="player-art-fallback" id="playerArtFallback"><i class="fas fa-music"></i></div>
+    </div>
+  </div>
+
+  <!-- Song Info -->
+  <div class="player-info">
+    <div class="player-song" id="playerSong">No song selected</div>
+    <div class="player-artist" id="playerArtist">—</div>
+  </div>
+
+  <!-- Controls -->
+  <div class="player-controls">
+    <button class="player-btn" id="playerPrev" title="Previous"><i class="fas fa-step-backward"></i></button>
+    <button class="player-btn player-play-btn" id="playerPlayPause" title="Play/Pause">
+      <i class="fas fa-play" id="playerPlayIcon"></i>
+    </button>
+    <button class="player-btn" id="playerNext" title="Next"><i class="fas fa-step-forward"></i></button>
+  </div>
+
+  <!-- Progress -->
+  <div class="player-progress-wrap">
+    <span class="player-time" id="playerCurTime">0:00</span>
+    <div class="player-progress-bar" id="playerProgressBar">
+      <div class="player-progress-fill" id="playerProgressFill"></div>
+      <div class="player-progress-thumb"></div>
+    </div>
+    <span class="player-time" id="playerDurTime">0:00</span>
+  </div>
+
+  <!-- Volume -->
+  <div class="player-volume">
+    <button class="player-btn" id="playerVolBtn"><i class="fas fa-volume-up" id="playerVolIcon"></i></button>
+    <input type="range" class="player-vol-slider" id="playerVolSlider" min="0" max="1" step="0.05" value="0.8">
+  </div>
+</div>
+
+<!-- ═══ GALLERY LIGHTBOX ═══ -->
+<div id="galleryLightbox" class="lightbox hidden">
+  <div class="lightbox-overlay" id="lightboxOverlay"></div>
+  <button class="lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev"><i class="fas fa-chevron-left"></i></button>
+  <button class="lightbox-nav lightbox-next" id="lightboxNext"><i class="fas fa-chevron-right"></i></button>
+  <div class="lightbox-content">
+    <img id="lightboxImg" src="" alt="gallery image">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
 <script src="script.js"></script>
+<script src="music.js"></script>
+<script src="gallery.js"></script>
 </body>
 </html>

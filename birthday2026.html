@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎉 Birthday 2026 Countdown</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Dancing+Script:wght@700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --neon:   #8b5cf6;
+      --neon2:  #6366f1;
+      --cyan:   #06b6d4;
+      --gold:   #f59e0b;
+      --bg:     #06040f;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── BACK BTN ── */
+    .back-btn {
+      position: fixed;
+      top: 18px; left: 20px;
+      z-index: 9999;
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 30px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.85rem; font-weight: 600;
+      transition: all 0.3s;
+    }
+    .back-btn:hover {
+      background: rgba(139,92,246,0.3);
+      border-color: rgba(139,92,246,0.6);
+      box-shadow: 0 0 20px rgba(139,92,246,0.3);
+    }
+
+    /* ── AUDIO BTN ── */
+    .audio-controls {
+      position: fixed;
+      top: 18px; right: 20px;
+      z-index: 9999;
+    }
+    .audio-btn {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(139,92,246,0.3);
+      color: #fff; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+    }
+    .audio-btn:hover {
+      background: rgba(139,92,246,0.4);
+      box-shadow: 0 0 20px rgba(139,92,246,0.5);
+    }
+
+    /* ── BACKGROUND GRID ── */
+    .bg-layer {
+      position: fixed; inset: 0; z-index: 0;
+    }
+    .bg-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(139,92,246,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139,92,246,0.06) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+    .bg-glow {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(139,92,246,0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(99,102,241,0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(6,182,212,0.07) 0%, transparent 60%),
+        #06040f;
+    }
+
+    /* ── STARS ── */
+    .stars-container {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 1;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      animation: starTwinkle ease-in-out infinite;
+    }
+    @keyframes starTwinkle {
+      0%,100% { opacity: 0.2; transform: scale(1); }
+      50%     { opacity: 1;   transform: scale(1.5); }
+    }
+
+    /* ── PARTICLES ── */
+    .particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 2;
+      border-radius: 50%;
+      animation: particleDrift linear infinite;
+      opacity: 0;
+    }
+    @keyframes particleDrift {
+      0%   { opacity: 0; transform: translateY(0) scale(0.5); }
+      10%  { opacity: 0.7; }
+      90%  { opacity: 0.3; }
+      100% { opacity: 0; transform: translateY(-100vh) scale(1.2); }
+    }
+
+    /* ── MAIN ── */
+    .page-content {
+      position: relative; z-index: 10;
+      padding: 80px 5% 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── HERO ── */
+    .countdown-hero {
+      text-align: center;
+      padding: 50px 0 30px;
+      animation: fadeUp 1s ease-out;
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(40px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .rocket-icon {
+      font-size: 4rem;
+      display: inline-block;
+      animation: rocketHover 2s ease-in-out infinite;
+      filter: drop-shadow(0 0 25px rgba(139,92,246,0.8));
+      margin-bottom: 18px;
+    }
+    @keyframes rocketHover {
+      0%,100% { transform: translateY(0) rotate(-10deg); }
+      50%     { transform: translateY(-14px) rotate(10deg); }
+    }
+
+    .countdown-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.8rem, 5vw, 3.5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, #fff 0%, #c4b5fd 40%, #8b5cf6 70%, #6366f1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+    }
+
+    .countdown-sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+
+    .target-date {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(139,92,246,0.12);
+      border: 1px solid rgba(139,92,246,0.3);
+      border-radius: 30px;
+      padding: 8px 22px;
+      font-size: 0.9rem;
+      color: #c4b5fd;
+      font-weight: 600;
+      margin-top: 10px;
+      box-shadow: 0 0 20px rgba(139,92,246,0.2);
+    }
+
+    /* ── COUNTDOWN DISPLAY ── */
+    .countdown-display {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin: 50px 0;
+      animation: fadeUp 1.2s ease-out;
+    }
+
+    .countdown-card {
+      flex: 0 0 clamp(100px, 18vw, 150px);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(139,92,246,0.25);
+      border-radius: 18px;
+      padding: 28px 16px 22px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow:
+        0 0 0 1px rgba(139,92,246,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .countdown-card:hover {
+      transform: translateY(-6px);
+      box-shadow:
+        0 20px 50px rgba(0,0,0,0.5),
+        0 0 30px rgba(139,92,246,0.3);
+      border-color: rgba(139,92,246,0.5);
+    }
+    .countdown-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--neon), transparent);
+      animation: cardScan 2s ease-in-out infinite;
+    }
+    @keyframes cardScan {
+      0%,100% { opacity: 0.4; }
+      50%     { opacity: 1; box-shadow: 0 0 20px var(--neon); }
+    }
+
+    .countdown-number {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+      text-shadow:
+        0 0 20px rgba(139,92,246,0.8),
+        0 0 40px rgba(139,92,246,0.4);
+      animation: numberGlow 2s ease-in-out infinite;
+      transition: transform 0.15s ease;
+    }
+    @keyframes numberGlow {
+      0%,100% { text-shadow: 0 0 20px rgba(139,92,246,0.6), 0 0 40px rgba(139,92,246,0.3); }
+      50%     { text-shadow: 0 0 30px rgba(139,92,246,1), 0 0 60px rgba(99,102,241,0.6); }
+    }
+    .countdown-number.tick {
+      animation: tickPop 0.15s ease-out;
+    }
+    @keyframes tickPop {
+      0%   { transform: scale(1.25); color: #c4b5fd; }
+      100% { transform: scale(1); color: #fff; }
+    }
+
+    .countdown-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 3px;
+      color: rgba(196,181,253,0.6);
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+
+    /* Separator ── */
+    .countdown-sep {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: rgba(139,92,246,0.4);
+      font-weight: 900;
+      animation: sepBlink 1s step-end infinite;
+      align-self: center;
+      padding-bottom: 14px;
+    }
+    @keyframes sepBlink {
+      0%,100% { opacity: 1; }
+      50%     { opacity: 0.2; }
+    }
+
+    /* ── MESSAGE ── */
+    .countdown-message {
+      text-align: center;
+      margin: 20px 0 60px;
+      animation: fadeUp 1.4s ease-out;
+    }
+    .countdown-message h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      background: linear-gradient(135deg, var(--gold) 0%, var(--neon) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+    .countdown-message p {
+      color: rgba(255,255,255,0.5);
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
+    /* ── PREVIEW GALLERY ── */
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 30px 0 60px;
+    }
+    .preview-item {
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      background: rgba(139,92,246,0.06);
+      border: 1px solid rgba(139,92,246,0.15);
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .preview-item:hover {
+      transform: scale(1.04);
+      box-shadow: 0 12px 40px rgba(139,92,246,0.3);
+      border-color: rgba(139,92,246,0.4);
+    }
+    .preview-item img { width:100%; height:100%; object-fit:cover; }
+    .preview-item-ph {
+      width:100%; height:100%;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:10px;
+    }
+    .preview-item-ph i  { font-size:2rem; color:rgba(139,92,246,0.4); }
+    .preview-item-ph p  { font-size:0.7rem; color:rgba(255,255,255,0.2); text-align:center; padding:0 10px; }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.2rem;
+      color: #c4b5fd;
+      margin-bottom: 24px;
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    /* ── BIRTHDAY ARRIVED OVERLAY ── */
+    .arrived-overlay {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(6,4,15,0.95);
+      backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 20px;
+      text-align: center; padding: 40px;
+      display: none;
+    }
+    .arrived-overlay.show { display: flex; animation: fadeUp 0.8s ease-out; }
+    .arrived-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(3rem, 8vw, 6rem);
+      background: linear-gradient(135deg, var(--gold), var(--neon));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── FOOTER ── */
+    .countdown-footer {
+      text-align: center;
+      padding: 40px 0 20px;
+      color: rgba(255,255,255,0.25);
+      font-size: 0.82rem;
+    }
+    .countdown-footer span { color: var(--neon); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .countdown-display { gap: 10px; }
+      .countdown-card { flex: 0 0 calc(45% - 10px); padding: 22px 10px 16px; }
+      .countdown-sep { display: none; }
+      .page-content { padding: 70px 4% 40px; }
+      .preview-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- BACKGROUND -->
+<div class="bg-layer">
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+</div>
+<div class="stars-container" id="starsContainer"></div>
+
+<!-- BACK BTN -->
+<a href="index.html" class="back-btn">
+  <i class="fas fa-arrow-left"></i> Back to Netflix
+</a>
+
+<!-- AUDIO -->
+<div class="audio-controls">
+  <button class="audio-btn" id="cdAudioBtn">
+    <i class="fas fa-music" id="cdAudioIcon"></i>
+  </button>
+</div>
+<audio id="cdAudio" loop>
+  <!-- <source src="music/countdown_ambient.mp3" type="audio/mpeg"> -->
+</audio>
+
+<!-- BIRTHDAY ARRIVED OVERLAY -->
+<div class="arrived-overlay" id="arrivedOverlay">
+  <div style="font-size:5rem">🎉🎂🎉</div>
+  <div class="arrived-title">Happy Birthday!</div>
+  <p style="color:rgba(255,255,255,0.6); font-size:1.1rem">The special day has finally arrived! 🎊</p>
+  <a href="birthday2025.html" style="
+    display:inline-flex; align-items:center; gap:8px; margin-top:20px;
+    padding:14px 32px; background:linear-gradient(135deg,var(--gold),var(--neon));
+    border-radius:30px; color:#fff; text-decoration:none; font-weight:700;
+  ">🎂 Celebrate Now!</a>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="page-content">
+
+  <!-- HERO -->
+  <div class="countdown-hero">
+    <div class="rocket-icon">🚀</div>
+    <h1 class="countdown-title">Birthday Countdown</h1>
+    <p class="countdown-sub">⭐ THE SPECIAL DAY IS COMING ⭐</p>
+    <div class="target-date">
+      <i class="fas fa-calendar-star"></i>
+      23 September 2026
+    </div>
+  </div>
+
+  <!-- COUNTDOWN DISPLAY -->
+  <div class="countdown-display">
+    <div class="countdown-card">
+      <div class="countdown-number" id="cdDays">000</div>
+      <div class="countdown-label">Days</div>
+    </div>
+    <div class="countdown-sep">:</div>
+    <div class="countdown-card">
+      <div class="countdown-number" id="cdHours">00</div>
+      <div class="countdown-label">Hours</div>
+    </div>
+    <div class="countdown-sep">:</div>
+    <div class="countdown-card">
+      <div class="countdown-number" id="cdMinutes">00</div>
+      <div class="countdown-label">Minutes</div>
+    </div>
+    <div class="countdown-sep">:</div>
+    <div class="countdown-card">
+      <div class="countdown-number" id="cdSeconds">00</div>
+      <div class="countdown-label">Seconds</div>
+    </div>
+  </div>
+
+  <!-- COUNTDOWN MESSAGE -->
+  <div class="countdown-message">
+    <h2>Counting Down to the Special Day 🎉</h2>
+    <p>Every second brings us closer to something magical</p>
+  </div>
+
+  <!-- PREVIEW GALLERY -->
+  <!-- <h2 class="section-title"><i class="fas fa-images"></i> Birthday Preview Gallery</h2>
+  <div class="preview-grid"> -->
+    <!-- Replace with actual images from /gallery -->
+    <!-- <div class="preview-item"><div class="preview-item-ph"><i class="fas fa-image"></i><p>Add birthday preview photos</p></div></div>
+    <div class="preview-item"><div class="preview-item-ph"><i class="fas fa-camera"></i><p>gallery/bday_preview_1.jpg</p></div></div>
+    <div class="preview-item"><div class="preview-item-ph"><i class="fas fa-star"></i><p>Replace with your photos</p></div></div>
+    <div class="preview-item"><div class="preview-item-ph"><i class="fas fa-birthday-cake"></i><p>Looking forward to this day!</p></div></div>
+  </div> -->
+
+  <!-- FOOTER -->
+  <!-- <div class="countdown-footer"> -->
+    
+  </div>
+</div><!-- /page-content -->
+
+<script>
+/* ═══ STARS ═══ */
+const starsWrap = document.getElementById('starsContainer');
+function makeStars(n) {
+  for (let i = 0; i < n; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = 1 + Math.random() * 3;
+    const colors = ['#8b5cf6','#6366f1','#06b6d4','#ffffff','#c4b5fd'];
+    s.style.cssText = `
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      width: ${size}px; height: ${size}px;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      animation-duration: ${2 + Math.random() * 4}s;
+      animation-delay: ${Math.random() * 5}s;
+      box-shadow: 0 0 ${size * 2}px currentColor;
+    `;
+    starsWrap.appendChild(s);
+  }
+}
+makeStars(120);
+
+/* ═══ FLOATING PARTICLES ═══ */
+const PARTICLE_COLORS = ['#8b5cf6','#6366f1','#06b6d4','#f59e0b','#ec4899'];
+function spawnParticle() {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const size = 3 + Math.random() * 6;
+  p.style.cssText = `
+    left: ${Math.random() * 100}%;
+    bottom: ${-size}px;
+    width: ${size}px; height: ${size}px;
+    background: ${PARTICLE_COLORS[Math.floor(Math.random() * PARTICLE_COLORS.length)]};
+    animation-duration: ${6 + Math.random() * 8}s;
+    animation-delay: ${Math.random() * 5}s;
+    box-shadow: 0 0 ${size}px currentColor;
+  `;
+  document.body.appendChild(p);
+  setTimeout(() => p.remove(), 16000);
+}
+for (let i = 0; i < 20; i++) spawnParticle();
+setInterval(spawnParticle, 1500);
+
+/* ═══ LIVE COUNTDOWN ═══ */
+// Target: 23 September 2026, midnight
+const TARGET = new Date('2026-09-23T00:00:00');
+
+const elDays    = document.getElementById('cdDays');
+const elHours   = document.getElementById('cdHours');
+const elMinutes = document.getElementById('cdMinutes');
+const elSeconds = document.getElementById('cdSeconds');
+
+let prevValues = { days: '', hours: '', minutes: '', seconds: '' };
+
+function pad(n, len = 2) {
+  return String(Math.max(0, n)).padStart(len, '0');
+}
+
+function addTickClass(el) {
+  el.classList.remove('tick');
+  void el.offsetWidth; // reflow
+  el.classList.add('tick');
+}
+
+function updateCountdown() {
+  const now  = new Date();
+  const diff = TARGET - now;
+
+  if (diff <= 0) {
+    // Birthday has arrived!
+    document.getElementById('arrivedOverlay').classList.add('show');
+    elDays.textContent = '000';
+    elHours.textContent = '00';
+    elMinutes.textContent = '00';
+    elSeconds.textContent = '00';
+    return;
+  }
+
+  const days    = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours   = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+  const dStr = pad(days, 3);
+  const hStr = pad(hours);
+  const mStr = pad(minutes);
+  const sStr = pad(seconds);
+
+  if (dStr !== prevValues.days) {
+    elDays.textContent = dStr;
+    addTickClass(elDays);
+    prevValues.days = dStr;
+  }
+  if (hStr !== prevValues.hours) {
+    elHours.textContent = hStr;
+    addTickClass(elHours);
+    prevValues.hours = hStr;
+  }
+  if (mStr !== prevValues.minutes) {
+    elMinutes.textContent = mStr;
+    addTickClass(elMinutes);
+    prevValues.minutes = mStr;
+  }
+  if (sStr !== prevValues.seconds) {
+    elSeconds.textContent = sStr;
+    addTickClass(elSeconds);
+    prevValues.seconds = sStr;
+  }
+}
+
+// Update every second
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+/* ═══ AUDIO ═══ */
+const audio    = document.getElementById('cdAudio');
+const audioBtn = document.getElementById('cdAudioBtn');
+const audioIco = document.getElementById('cdAudioIcon');
+let playing = false;
+audioBtn.onclick = () => {
+  if (!audio.children.length) {
+    alert('Add ambient music!\nDrop an mp3 into /music and uncomment the <source> in birthday2026.html');
+    return;
+  }
+  playing
+    ? (audio.pause(), playing = false, audioIco.className = 'fas fa-music')
+    : (audio.play().catch(()=>{}), playing = true, audioIco.className = 'fas fa-pause');
+};
+
+/* ═══ SPARKLE ON CLICK ═══ */
+const style = document.createElement('style');
+style.textContent = `@keyframes sparklePop{0%{opacity:0;transform:scale(0) translateY(0)}40%{opacity:1;transform:scale(1.3) translateY(-20px)}100%{opacity:0;transform:scale(0.5) translateY(-55px)}}`;
+document.head.appendChild(style);
+document.addEventListener('click', e => {
+  ['⭐','💫','✨','🌟','🎉'].forEach((em, i) => {
+    const s = document.createElement('div');
+    s.style.cssText = `position:fixed;z-index:9999;pointer-events:none;left:${e.clientX + (i-2)*18}px;top:${e.clientY}px;font-size:1.1rem;animation:sparklePop 1s ease-out forwards`;
+    s.textContent = em;
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 1000);
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎂 Happy Birthday 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Dancing+Script:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --gold:   #f59e0b;
+      --pink:   #ec4899;
+      --purple: #8b5cf6;
+      --bg:     #0d0814;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── BACK BUTTON ── */
+    .back-btn {
+      position: fixed;
+      top: 18px;
+      left: 20px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 30px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .back-btn:hover {
+      background: rgba(229,9,20,0.3);
+      border-color: rgba(229,9,20,0.5);
+      box-shadow: 0 0 20px rgba(229,9,20,0.3);
+    }
+
+    /* ── AUDIO CONTROLS ── */
+    .audio-controls {
+      position: fixed;
+      top: 18px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .audio-btn {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+    }
+    .audio-btn:hover { background: rgba(245,158,11,0.4); border-color: var(--gold); }
+
+    /* ── ANIMATED BACKGROUND ── */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse at 10% 20%, rgba(245,158,11,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 80%, rgba(236,72,153,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(139,92,246,0.1) 0%, transparent 70%),
+        #0d0814;
+    }
+
+    /* ── CONFETTI ── */
+    .confetti-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute;
+      top: -20px;
+      width: 10px;
+      height: 10px;
+      opacity: 0;
+      animation: confettiFall linear infinite;
+    }
+    .confetti-piece.rect  { border-radius: 2px; }
+    .confetti-piece.circle { border-radius: 50%; }
+    .confetti-piece.star  {
+      width: 0; height: 0; background: transparent !important;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+    }
+    @keyframes confettiFall {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* ── BALLOONS ── */
+    .balloon-container {
+      position: fixed;
+      bottom: -80px;
+      width: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .balloon {
+      position: absolute;
+      bottom: 0;
+      width: 55px;
+      height: 70px;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      animation: balloonFloat linear infinite;
+    }
+    .balloon::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 30px;
+      background: rgba(255,255,255,0.4);
+    }
+    @keyframes balloonFloat {
+      0%   { transform: translateY(0) rotate(-5deg); }
+      25%  { transform: translateY(-20px) rotate(5deg); }
+      50%  { transform: translateY(-10px) rotate(-3deg); }
+      75%  { transform: translateY(-25px) rotate(4deg); }
+      100% { transform: translateY(0) rotate(-5deg); }
+    }
+
+    /* ── SPARKLES ── */
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 2;
+      animation: sparklePop 1.5s ease-out forwards;
+    }
+    @keyframes sparklePop {
+      0%   { opacity: 0; transform: scale(0) rotate(0deg); }
+      40%  { opacity: 1; transform: scale(1.3) rotate(180deg); }
+      100% { opacity: 0; transform: scale(0.5) rotate(360deg); }
+    }
+
+    /* ── MAIN CONTENT ── */
+    .page-content {
+      position: relative;
+      z-index: 10;
+      padding: 80px 5% 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── HERO ── */
+    .bday-hero {
+      text-align: center;
+      padding: 60px 0 40px;
+      animation: fadeUp 1s ease-out;
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(40px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── CAKE ANIMATION ── */
+    .cake-wrap {
+      font-size: 6rem;
+      margin-bottom: 20px;
+      display: inline-block;
+      animation: cakeBounce 2s ease-in-out infinite;
+      filter: drop-shadow(0 0 30px rgba(245,158,11,0.7));
+    }
+    @keyframes cakeBounce {
+      0%,100% { transform: scale(1) rotate(-3deg); }
+      50%     { transform: scale(1.1) rotate(3deg); }
+    }
+
+    .bday-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #f59e0b 0%, #ec4899 50%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+      line-height: 1.1;
+      text-shadow: none;
+    }
+
+    .bday-subtitle {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+    }
+
+    /* ── MESSAGE CARD ── */
+    .message-card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(245,158,11,0.2);
+      border-radius: 20px;
+      padding: 40px;
+      margin: 40px 0;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 1.2s ease-out;
+      box-shadow:
+        0 0 0 1px rgba(245,158,11,0.1),
+        0 20px 60px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    .message-card::before {
+      content: '✨';
+      position: absolute;
+      top: 20px; right: 24px;
+      font-size: 1.5rem;
+      animation: spin 4s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .message-card h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.2rem;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .message-card p {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.8);
+    }
+    .message-card p + p { margin-top: 14px; }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.2rem;
+      color: var(--gold);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* ── MEMORIES SLIDER ── */
+    .memories-section {
+      margin: 60px 0;
+      animation: fadeUp 1.4s ease-out;
+    }
+
+    .slider-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .slider-track {
+      display: flex;
+      transition: transform 0.55s cubic-bezier(.22,.68,0,1.2);
+    }
+
+    .slide {
+      flex: 0 0 100%;
+      position: relative;
+      min-height: 340px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .slide-placeholder {
+      width: 100%;
+      height: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(236,72,153,0.1));
+    }
+    .slide-placeholder i  { font-size: 3rem; color: var(--gold); opacity: 0.4; }
+    .slide-placeholder p  { color: rgba(255,255,255,0.3); font-size: 0.9rem; }
+
+    .slide-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px 24px;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    }
+    .slide-caption {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      z-index: 10;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s ease;
+    }
+    .slider-btn:hover {
+      background: rgba(245,158,11,0.4);
+      border-color: var(--gold);
+      box-shadow: 0 0 20px rgba(245,158,11,0.4);
+    }
+    .slider-prev { left: 14px; }
+    .slider-next { right: 14px; }
+
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 0 8px;
+    }
+    .slider-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .slider-dot.active {
+      background: var(--gold);
+      box-shadow: 0 0 10px rgba(245,158,11,0.7);
+      width: 22px;
+      border-radius: 4px;
+    }
+
+    /* ── WISHES GRID ── */
+    .wishes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin: 40px 0;
+    }
+
+    .wish-card {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(16px);
+      border-radius: 16px;
+      padding: 28px 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeUp 1.2s ease-out both;
+    }
+    .wish-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(245,158,11,0.15);
+    }
+    .wish-card .wish-icon {
+      font-size: 2.5rem;
+      margin-bottom: 14px;
+    }
+    .wish-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .wish-card p {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    .bday-footer {
+      text-align: center;
+      padding: 40px 0 20px;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.85rem;
+    }
+    .bday-footer span {
+      color: #ec4899;
+      font-size: 1.1rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .page-content { padding: 70px 4% 40px; }
+      .message-card { padding: 26px 20px; }
+      .slide img, .slide-placeholder { height: 240px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- BG -->
+<div class="bg-layer"></div>
+
+<!-- CONFETTI -->
+<div class="confetti-container" id="confettiContainer"></div>
+
+<!-- BALLOONS -->
+<div class="balloon-container" id="balloonContainer"></div>
+
+<!-- BACK BTN -->
+<a href="index.html" class="back-btn">
+  <i class="fas fa-arrow-left"></i> Back to Netflix
+</a>
+
+<!-- AUDIO -->
+<div class="audio-controls">
+  <button class="audio-btn" id="bdayAudioBtn" title="Toggle music">
+    <i class="fas fa-music" id="bdayAudioIcon"></i>
+  </button>
+</div>
+<audio id="bdayAudio" loop>
+  <!-- Drop your birthday mp3 here: -->
+  <!-- <source src="music/happy_birthday.mp3" type="audio/mpeg"> -->
+</audio>
+
+<!-- MAIN CONTENT -->
+<div class="page-content">
+
+  <!-- HERO -->
+  <div class="bday-hero">
+    <div class="cake-wrap">🎂</div>
+    <h1 class="bday-title">Happy Birthday!</h1>
+    <p class="bday-subtitle">✨ A Very Special Day — 2025 ✨</p>
+  </div>
+
+  <!-- MESSAGE CARD -->
+  <div class="message-card">
+    <h2>🌸 A Message From the Heart</h2>
+    <p>
+      On this beautiful day, I want you to know how incredibly special you are.
+      Every moment spent with you feels like a scene from the most beautiful movie ever made —
+      full of warmth, laughter, and a love so deep it's impossible to describe.
+    </p>
+    <p>
+      May this birthday bring you all the joy, light, and magic you deserve.
+      You don't just make my days better — you make my whole world brighter. 💫
+    </p>
+    <p>
+      Here's to you, on your special day. <strong style="color:var(--gold)">Happy Birthday, my love.</strong> 🎉
+    </p>
+  </div>
+
+  <!-- MEMORIES SLIDER -->
+  <div class="memories-section">
+    <h2 class="section-title"><i class="fas fa-images"></i> Birthday Memories</h2>
+    <div class="slider-wrap">
+      <div class="slider-track" id="bdaySliderTrack">
+        <!-- 
+          HOW TO ADD PHOTOS:
+          Replace the slide-placeholder divs with actual images:
+          <div class="slide">
+            <img src="gallery/your_bday_photo.jpg" alt="Memory">
+            <div class="slide-overlay"><div class="slide-caption">Your Caption</div></div>
+          </div>
+        -->
+        <div class="slide">
+          <div class="slide-placeholder">
+            <i class="fas fa-image"></i>
+            <p>Add birthday photos to /gallery folder</p>
+          </div>
+          <div class="slide-overlay"><div class="slide-caption">🎉 Birthday Moments</div></div>
+        </div>
+        <div class="slide">
+          <div class="slide-placeholder">
+            <i class="fas fa-birthday-cake"></i>
+            <p>Replace with your favourite memory</p>
+          </div>
+          <div class="slide-overlay"><div class="slide-caption">🎂 Cake Cutting</div></div>
+        </div>
+        <div class="slide">
+          <div class="slide-placeholder">
+            <i class="fas fa-heart"></i>
+            <p>Add as many slides as you like</p>
+          </div>
+          <div class="slide-overlay"><div class="slide-caption">💝 Special Moments</div></div>
+        </div>
+      </div>
+      <button class="slider-btn slider-prev" id="bdayPrev"><i class="fas fa-chevron-left"></i></button>
+      <button class="slider-btn slider-next" id="bdayNext"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="slider-dots" id="bdayDots"></div>
+  </div>
+
+  <!-- WISHES GRID -->
+  <h2 class="section-title"><i class="fas fa-star"></i> Birthday Wishes</h2>
+  <div class="wishes-grid">
+    <div class="wish-card" style="animation-delay:0.1s; border-color:rgba(245,158,11,0.2)">
+      <div class="wish-icon">🌟</div>
+      <h3>May All Dreams Come True</h3>
+      <p>Every dream you hold in your heart deserves to become a beautiful reality.</p>
+    </div>
+    <div class="wish-card" style="animation-delay:0.2s; border-color:rgba(236,72,153,0.2)">
+      <div class="wish-icon">💖</div>
+      <h3>A Life Full of Love</h3>
+      <p>May your days always be wrapped in warmth, laughter and endless love.</p>
+    </div>
+    <div class="wish-card" style="animation-delay:0.3s; border-color:rgba(139,92,246,0.2)">
+      <div class="wish-icon">🎁</div>
+      <h3>Infinite Happiness</h3>
+      <p>On this day and every day, may happiness find you wherever you go.</p>
+    </div>
+    <div class="wish-card" style="animation-delay:0.4s; border-color:rgba(16,185,129,0.2)">
+      <div class="wish-icon">✨</div>
+      <h3>Magical Moments Ahead</h3>
+      <p>Your best chapters are still unwritten. What a beautiful story awaits you.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="bday-footer">
+    Made with <span>❤️</span> just for you &nbsp;·&nbsp; 🎂 Birthday 2025
+  </div>
+
+</div><!-- /page-content -->
+
+<script>
+/* ═══ CONFETTI ═══ */
+const CONFETTI_COLORS = ['#f59e0b','#ec4899','#8b5cf6','#ef4444','#10b981','#3b82f6','#fbbf24','#f472b6'];
+const confettiContainer = document.getElementById('confettiContainer');
+
+function createConfetti() {
+  const piece = document.createElement('div');
+  const shapes = ['rect','circle'];
+  const shape  = shapes[Math.floor(Math.random() * shapes.length)];
+  piece.className = `confetti-piece ${shape}`;
+  piece.style.cssText = `
+    left: ${Math.random() * 100}%;
+    background: ${CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)]};
+    width: ${6 + Math.random() * 8}px;
+    height: ${6 + Math.random() * 8}px;
+    animation-duration: ${3 + Math.random() * 4}s;
+    animation-delay: ${Math.random() * 5}s;
+    opacity: 0;
+  `;
+  confettiContainer.appendChild(piece);
+}
+for (let i = 0; i < 60; i++) createConfetti();
+
+/* ═══ BALLOONS ═══ */
+const BALLOON_COLORS = ['#f59e0b','#ec4899','#8b5cf6','#ef4444','#3b82f6','#10b981'];
+const balloonContainer = document.getElementById('balloonContainer');
+
+function createBalloon() {
+  const b = document.createElement('div');
+  b.className = 'balloon';
+  const color = BALLOON_COLORS[Math.floor(Math.random() * BALLOON_COLORS.length)];
+  const left  = 5 + Math.random() * 90;
+  const dur   = 3 + Math.random() * 4;
+  const delay = Math.random() * 3;
+  b.style.cssText = `
+    background: ${color};
+    left: ${left}%;
+    animation-duration: ${dur}s;
+    animation-delay: ${delay}s;
+    box-shadow: inset -8px -10px 0 rgba(0,0,0,0.15), 0 0 20px ${color}55;
+  `;
+  balloonContainer.appendChild(b);
+}
+for (let i = 0; i < 12; i++) createBalloon();
+
+/* ═══ SPARKLES on click ═══ */
+document.addEventListener('click', e => {
+  const emojis = ['✨','⭐','🌟','💫','🎉','🎊'];
+  const sparkle = document.createElement('div');
+  sparkle.className = 'sparkle';
+  sparkle.style.cssText = `
+    left: ${e.clientX - 15}px;
+    top: ${e.clientY - 15}px;
+    font-size: 1.5rem;
+  `;
+  sparkle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  document.body.appendChild(sparkle);
+  setTimeout(() => sparkle.remove(), 1500);
+});
+
+/* ═══ SLIDER ═══ */
+const track  = document.getElementById('bdaySliderTrack');
+const dotsWrap = document.getElementById('bdayDots');
+const slides = track.querySelectorAll('.slide');
+let currentSlide = 0;
+
+function buildDots() {
+  dotsWrap.innerHTML = '';
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    dotsWrap.appendChild(dot);
+  });
+}
+
+function goToSlide(n) {
+  currentSlide = (n + slides.length) % slides.length;
+  track.style.transform = `translateX(-${currentSlide * 100}%)`;
+  dotsWrap.querySelectorAll('.slider-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === currentSlide);
+  });
+}
+
+document.getElementById('bdayPrev').onclick = () => goToSlide(currentSlide - 1);
+document.getElementById('bdayNext').onclick = () => goToSlide(currentSlide + 1);
+
+// Auto-play slider
+setInterval(() => goToSlide(currentSlide + 1), 4500);
+buildDots();
+
+/* ═══ AUDIO ═══ */
+const audio   = document.getElementById('bdayAudio');
+const audioBtn = document.getElementById('bdayAudioBtn');
+const audioIcon = document.getElementById('bdayAudioIcon');
+let playing = false;
+
+audioBtn.onclick = () => {
+  if (!audio.src && !audio.querySelector('source[src]')) {
+    alert('Add a birthday song!\nDrop an mp3 into /music and uncomment the <source> tag in birthday2025.html');
+    return;
+  }
+  if (playing) {
+    audio.pause();
+    playing = false;
+    audioIcon.className = 'fas fa-music';
+  } else {
+    audio.play().catch(() => {});
+    playing = true;
+    audioIcon.className = 'fas fa-pause';
+  }
+};
+
+// Touch swipe on slider
+let touchStartX = 0;
+track.parentElement.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+track.parentElement.addEventListener('touchend', e => {
+  const diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) goToSlide(currentSlide + (diff > 0 ? 1 : -1));
+});
+</script>
+</body>
+</html>

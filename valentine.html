@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>❤️ Valentine's Day</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Dancing+Script:wght@700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --red:  #e11d48;
+      --pink: #fb7185;
+      --rose: #fda4af;
+      --bg:   #0c0508;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── BACK BTN ── */
+    .back-btn {
+      position: fixed;
+      top: 18px; left: 20px;
+      z-index: 9999;
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 30px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.85rem; font-weight: 600;
+      transition: all 0.3s;
+    }
+    .back-btn:hover {
+      background: rgba(225,29,72,0.3);
+      border-color: rgba(225,29,72,0.5);
+      box-shadow: 0 0 20px rgba(225,29,72,0.3);
+    }
+
+    /* ── AUDIO BTN ── */
+    .audio-controls {
+      position: fixed;
+      top: 18px; right: 20px;
+      z-index: 9999;
+    }
+    .audio-btn {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+    }
+    .audio-btn:hover {
+      background: rgba(225,29,72,0.4);
+      border-color: var(--red);
+    }
+
+    /* ── BACKGROUND ── */
+    .bg-layer {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse at 15% 25%, rgba(225,29,72,0.2) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 75%, rgba(251,113,133,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(159,18,57,0.1) 0%, transparent 60%),
+        #0c0508;
+    }
+
+    /* ── FLOATING HEARTS ── */
+    .hearts-container {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 1;
+      overflow: hidden;
+    }
+    .heart-particle {
+      position: absolute;
+      bottom: -40px;
+      font-size: 1.2rem;
+      animation: heartRise linear infinite;
+      opacity: 0;
+    }
+    @keyframes heartRise {
+      0%   { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+      10%  { opacity: 0.8; }
+      90%  { opacity: 0.4; }
+      100% { transform: translateY(-110vh) rotate(30deg) scale(1.1); opacity: 0; }
+    }
+
+    /* ── CONTENT ── */
+    .page-content {
+      position: relative; z-index: 10;
+      padding: 80px 5% 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── HERO ── */
+    .val-hero {
+      text-align: center;
+      padding: 60px 0 20px;
+      animation: fadeUp 1s ease-out;
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(40px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .heart-icon {
+      font-size: 5.5rem;
+      display: inline-block;
+      animation: heartBeat 1.4s ease-in-out infinite;
+      filter: drop-shadow(0 0 30px rgba(225,29,72,0.8));
+    }
+    @keyframes heartBeat {
+      0%,100% { transform: scale(1); }
+      14%     { transform: scale(1.15); }
+      28%     { transform: scale(1); }
+      42%     { transform: scale(1.1); }
+      70%     { transform: scale(1); }
+    }
+
+    .val-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 0%, #fda4af 30%, #e11d48 60%, #9f1239 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 14px;
+      line-height: 1.1;
+    }
+
+    .val-sub {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    /* ── TYPING EFFECT ── */
+    .typing-wrap {
+      margin: 30px auto;
+      max-width: 600px;
+      min-height: 60px;
+    }
+    .typing-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--rose);
+      line-height: 1.7;
+      text-align: center;
+    }
+    .typing-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.2em;
+      background: var(--pink);
+      vertical-align: middle;
+      margin-left: 3px;
+      animation: blink 0.8s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ── LOVE MESSAGE ── */
+    .love-card {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(225,29,72,0.2);
+      border-radius: 20px;
+      padding: 40px;
+      margin: 40px 0;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(225,29,72,0.1),
+        0 20px 60px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+      animation: fadeUp 1.2s ease-out;
+    }
+    .love-card::before {
+      content: '❤️';
+      position: absolute;
+      top: 18px; right: 22px;
+      font-size: 1.4rem;
+      animation: heartBeat 1.8s ease-in-out infinite;
+    }
+    .love-card h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.2rem;
+      color: var(--pink);
+      margin-bottom: 20px;
+    }
+    .love-card p {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.8);
+    }
+    .love-card p + p { margin-top: 14px; }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.2rem;
+      color: var(--pink);
+      margin-bottom: 24px;
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    /* ── LOVE TIMELINE ── */
+    .timeline {
+      position: relative;
+      margin: 40px 0 60px;
+      padding-left: 30px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, var(--red), var(--pink), transparent);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 36px;
+      padding-left: 30px;
+      animation: fadeUp 1s ease-out both;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -37px; top: 8px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--red);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 15px rgba(225,29,72,0.7);
+    }
+    .timeline-date {
+      font-size: 0.8rem;
+      color: var(--pink);
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .timeline-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .timeline-desc {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+    }
+
+    /* ── MEMORIES GALLERY ── */
+    .memories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 30px 0 60px;
+    }
+    .memory-item {
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 1 / 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(225,29,72,0.15);
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .memory-item:hover {
+      transform: scale(1.04);
+      box-shadow: 0 12px 40px rgba(225,29,72,0.25);
+    }
+    .memory-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .memory-item-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 10px;
+    }
+    .memory-item-placeholder i   { font-size: 2rem; color: rgba(225,29,72,0.4); }
+    .memory-item-placeholder p   { font-size: 0.72rem; color: rgba(255,255,255,0.2); text-align: center; padding: 0 10px; }
+    .memory-item-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent 50%);
+      opacity: 0; transition: opacity 0.3s;
+      display: flex; align-items: flex-end; padding: 12px;
+    }
+    .memory-item:hover .memory-item-overlay { opacity: 1; }
+
+    /* ── QUOTES STRIP ── */
+    .quotes-strip {
+      margin: 40px 0;
+      overflow: hidden;
+    }
+    .quotes-track {
+      display: flex;
+      gap: 24px;
+      animation: scrollQuotes 30s linear infinite;
+      width: max-content;
+    }
+    @keyframes scrollQuotes {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .quote-pill {
+      flex-shrink: 0;
+      padding: 12px 24px;
+      background: rgba(225,29,72,0.08);
+      border: 1px solid rgba(225,29,72,0.2);
+      border-radius: 30px;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--rose);
+      white-space: nowrap;
+    }
+
+    /* ── FOOTER ── */
+    .val-footer {
+      text-align: center;
+      padding: 40px 0 20px;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.85rem;
+    }
+    .val-footer span { color: var(--red); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .page-content { padding: 70px 4% 40px; }
+      .love-card { padding: 24px 18px; }
+      .memories-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+<div class="hearts-container" id="heartsContainer"></div>
+
+<a href="index.html" class="back-btn">
+  <i class="fas fa-arrow-left"></i> Back to Netflix
+</a>
+
+<div class="audio-controls">
+  <button class="audio-btn" id="valAudioBtn">
+    <i class="fas fa-music" id="valAudioIcon"></i>
+  </button>
+</div>
+<audio id="valAudio" loop>
+  <!-- <source src="music/romantic_song.mp3" type="audio/mpeg"> -->
+</audio>
+
+<div class="page-content">
+
+  <!-- HERO -->
+  <div class="val-hero">
+    <div class="heart-icon">❤️</div>
+    <h1 class="val-title">Valentine's Day</h1>
+    <p class="val-sub">∞ A Love That Lasts Forever ∞</p>
+    <div class="typing-wrap">
+      <div class="typing-quote">
+        <span id="typingText"></span><span class="typing-cursor"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOVE MESSAGE -->
+  <div class="love-card">
+    <h2>💌 To My Forever Person</h2>
+    <p>
+      I never believed in fairy tales, until the day I found you. You turned ordinary moments
+      into the most extraordinary memories, and every time I look at you, I fall in love all over again.
+    </p>
+    <p>
+      You are my Valentine, not just today, but every single day. The way your eyes light up,
+      the sound of your laughter, the warmth of your presence — these are the things I want to
+      hold onto for the rest of my life.
+    </p>
+    <p>
+      <strong style="color:var(--rose)">I love you. Today. Tomorrow. Always.</strong> ❤️
+    </p>
+  </div>
+
+  <!-- QUOTES STRIP -->
+  <div class="quotes-strip" id="quotesStrip"></div>
+
+  <!-- LOVE TIMELINE -->
+  <h2 class="section-title"><i class="fas fa-heart"></i> Our Love Timeline</h2>
+  <div class="timeline">
+    <div class="timeline-item" style="animation-delay:0.1s">
+      <div class="timeline-date">The Beginning ✨</div>
+      <div class="timeline-title">The Day We Met</div>
+      <div class="timeline-desc">Every love story has a moment where everything changes. This was ours.</div>
+    </div>
+    <div class="timeline-item" style="animation-delay:0.2s">
+      <div class="timeline-date">First Smile 💫</div>
+      <div class="timeline-title">When I Knew</div>
+      <div class="timeline-desc">That smile. The one that made me realize this was something I never wanted to lose.</div>
+    </div>
+    <div class="timeline-item" style="animation-delay:0.3s">
+      <div class="timeline-date">Growing Together 🌸</div>
+      <div class="timeline-title">Every Little Moment</div>
+      <div class="timeline-desc">Coffee mornings, late-night conversations, stolen glances — each one a treasure.</div>
+    </div>
+    <div class="timeline-item" style="animation-delay:0.4s">
+      <div class="timeline-date">Valentine's 2025 ❤️</div>
+      <div class="timeline-title">This Beautiful Day</div>
+      <div class="timeline-desc">Celebrating you, us, and all the beautiful days still to come.</div>
+    </div>
+    <div class="timeline-item" style="animation-delay:0.5s">
+      <div class="timeline-date">Forever → ∞</div>
+      <div class="timeline-title">The Rest of Our Story</div>
+      <div class="timeline-desc">The best chapters haven't been written yet. I can't wait to live them with you.</div>
+    </div>
+  </div>
+
+  <!-- MEMORIES -->
+  <h2 class="section-title"><i class="fas fa-images"></i> Our Memories</h2>
+  <div class="memories-grid" id="memoriesGrid">
+    <!-- Placeholders — replace with your real images -->
+    <div class="memory-item"><div class="memory-item-placeholder"><i class="fas fa-heart"></i><p>Add photos to /gallery folder</p></div><div class="memory-item-overlay"></div></div>
+    <div class="memory-item"><div class="memory-item-placeholder"><i class="fas fa-camera"></i><p>Replace with your memories</p></div><div class="memory-item-overlay"></div></div>
+    <div class="memory-item"><div class="memory-item-placeholder"><i class="fas fa-image"></i><p>gallery/your_photo.jpg</p></div><div class="memory-item-overlay"></div></div>
+    <div class="memory-item"><div class="memory-item-placeholder"><i class="fas fa-star"></i><p>Add as many as you like</p></div><div class="memory-item-overlay"></div></div>
+    <div class="memory-item"><div class="memory-item-placeholder"><i class="fas fa-heart"></i><p>Every picture tells a story</p></div><div class="memory-item-overlay"></div></div>
+    <div class="memory-item"><div class="memory-item-placeholder"><i class="fas fa-camera-retro"></i><p>Your favourite moments</p></div><div class="memory-item-overlay"></div></div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="val-footer">
+    Made with <span>❤️</span> just for you &nbsp;·&nbsp; Valentine's Day
+  </div>
+</div>
+
+<script>
+/* ═══ FLOATING HEARTS ═══ */
+const HEART_EMOJIS = ['❤️','💕','💖','💗','💝','💓','💞','🌹'];
+const heartsWrap   = document.getElementById('heartsContainer');
+
+function spawnHeart() {
+  const h = document.createElement('div');
+  h.className = 'heart-particle';
+  h.style.cssText = `
+    left: ${Math.random() * 100}%;
+    font-size: ${0.8 + Math.random() * 1.4}rem;
+    animation-duration: ${5 + Math.random() * 7}s;
+    animation-delay: ${Math.random() * 4}s;
+  `;
+  h.textContent = HEART_EMOJIS[Math.floor(Math.random() * HEART_EMOJIS.length)];
+  heartsWrap.appendChild(h);
+  setTimeout(() => h.remove(), 14000);
+}
+for (let i = 0; i < 25; i++) spawnHeart();
+setInterval(spawnHeart, 1200);
+
+/* ═══ TYPING EFFECT ═══ */
+const QUOTES = [
+  '"You are my today and all of my tomorrows."',
+  '"In all the world, there is no heart for me like yours."',
+  '"I have found the one whom my soul loves."',
+  '"You are the best thing that ever happened to me."',
+  '"Every love story is beautiful, but ours is my favourite."',
+  '"I choose you. And I\'ll choose you over and over."',
+];
+let qIdx = 0, charIdx = 0, isDeleting = false;
+const typingEl = document.getElementById('typingText');
+
+function typeQuote() {
+  const current = QUOTES[qIdx];
+  if (!isDeleting) {
+    typingEl.textContent = current.slice(0, ++charIdx);
+    if (charIdx === current.length) {
+      isDeleting = true;
+      setTimeout(typeQuote, 2800);
+      return;
+    }
+  } else {
+    typingEl.textContent = current.slice(0, --charIdx);
+    if (charIdx === 0) {
+      isDeleting = false;
+      qIdx = (qIdx + 1) % QUOTES.length;
+      setTimeout(typeQuote, 400);
+      return;
+    }
+  }
+  setTimeout(typeQuote, isDeleting ? 28 : 52);
+}
+typeQuote();
+
+/* ═══ QUOTES STRIP ═══ */
+const STRIP_QUOTES = [
+  '"You make my heart smile."',
+  '"Forever and always."',
+  '"My heart is yours."',
+  '"Love you to the moon and back."',
+  '"Every moment with you is magic."',
+  '"You are my sunshine."',
+  '"Together is my favourite place."',
+  '"You complete me."',
+];
+const qs = document.getElementById('quotesStrip');
+const qt = document.createElement('div');
+qt.className = 'quotes-track';
+const doubled = [...STRIP_QUOTES, ...STRIP_QUOTES]; // duplicate for infinite scroll
+doubled.forEach(q => {
+  const pill = document.createElement('div');
+  pill.className = 'quote-pill';
+  pill.textContent = q;
+  qt.appendChild(pill);
+});
+qs.appendChild(qt);
+
+/* ═══ AUDIO ═══ */
+const audio    = document.getElementById('valAudio');
+const audioBtn = document.getElementById('valAudioBtn');
+const audioIco = document.getElementById('valAudioIcon');
+let playing = false;
+audioBtn.onclick = () => {
+  if (!audio.children.length) {
+    alert('Add a romantic song!\nDrop an mp3 into /music and uncomment the <source> in valentine.html');
+    return;
+  }
+  playing ? (audio.pause(), playing = false, audioIco.className = 'fas fa-music')
+           : (audio.play().catch(()=>{}), playing = true, audioIco.className = 'fas fa-pause');
+};
+
+/* ═══ SPARKLE ON CLICK ═══ */
+document.addEventListener('click', e => {
+  ['❤️','💕','✨'].forEach((em, i) => {
+    const s = document.createElement('div');
+    s.style.cssText = `
+      position:fixed; z-index:9999; pointer-events:none;
+      left:${e.clientX + (i-1)*20}px; top:${e.clientY}px;
+      font-size:1.2rem;
+      animation: sparklePop 1s ease-out forwards;
+    `;
+    s.textContent = em;
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 1000);
+  });
+});
+
+// Dynamic sparkle keyframes injection
+const sparkleStyle = document.createElement('style');
+sparkleStyle.textContent = `@keyframes sparklePop { 0%{opacity:0;transform:scale(0) translateY(0)} 40%{opacity:1;transform:scale(1.2) translateY(-20px)} 100%{opacity:0;transform:scale(0.5) translateY(-50px)} }`;
+document.head.appendChild(sparkleStyle);
+</script>
+</body>
+</html>

@@ -794,3 +794,68 @@ img {
   opacity: 0;
   pointer-events: none;
 }
+
+/* ═══ SPECIAL NAV LINKS ═══ */
+.nav-links .nav-special {
+  position: relative;
+  font-weight: 700 !important;
+  letter-spacing: 0.3px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: all 0.3s ease !important;
+}
+
+.nav-links .nav-birthday25 {
+  color: #f59e0b !important;
+}
+.nav-links .nav-birthday25:hover {
+  color: #fcd34d !important;
+  text-shadow: 0 0 12px rgba(245,158,11,0.8);
+  background: rgba(245,158,11,0.1);
+}
+
+.nav-links .nav-valentine {
+  color: #f43f5e !important;
+}
+.nav-links .nav-valentine:hover {
+  color: #fb7185 !important;
+  text-shadow: 0 0 12px rgba(244,63,94,0.8);
+  background: rgba(244,63,94,0.1);
+}
+
+.nav-links .nav-birthday26 {
+  color: #8b5cf6 !important;
+}
+.nav-links .nav-birthday26:hover {
+  color: #a78bfa !important;
+  text-shadow: 0 0 12px rgba(139,92,246,0.8);
+  background: rgba(139,92,246,0.1);
+}
+
+/* Mobile menu special links */
+.mobile-menu .nav-birthday25 { color: #f59e0b; }
+.mobile-menu .nav-valentine  { color: #f43f5e; }
+.mobile-menu .nav-birthday26 { color: #8b5cf6; }
+
+/* Nav link hover underline animation */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--red);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+.nav-links a {
+  position: relative;
+}
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+.nav-links .nav-birthday25::after { background: #f59e0b; }
+.nav-links .nav-valentine::after  { background: #f43f5e; }
+.nav-links .nav-birthday26::after { background: #8b5cf6; }
